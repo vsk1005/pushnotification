@@ -9,7 +9,7 @@ const check = () => {
 
 // I added a function that can be used to register a service worker.
 const registerServiceWorker = async () => {
-    const swRegistration = await navigator.serviceWorker.register('./services.js'); //notice the file name
+    const swRegistration = await navigator.serviceWorker.register('./sw.js'); //notice the file name
     return swRegistration;
 }
 
@@ -31,7 +31,22 @@ const showLocalNotification = (title, body, swRegistration) => {
         body,
         // here you can add more properties like icon, image, vibrate, etc.
     };
-    swRegistration.showNotification(title, options);
+    swRegistration. showNotification(title, options);
+}
+
+var advertMessage = "";
+const loadAdvertistment = () => {
+    alert('a');
+      var Val;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+         advertMessage = this.responseText;
+         alert(advertMessage);
+        }
+      };
+      xhttp.open("GET", "advert.php", true);
+      xhttp.send();   
 }
 
 
@@ -39,7 +54,8 @@ const main = async () => {
     check();
     const swRegistration = await registerServiceWorker();
     const permission =  await requestNotificationPermission(); 
-    showLocalNotification('This is title', 'Welcome to Notification', swRegistration);
+    loadAdvertistment();
+    showLocalNotification('This is title', advertMessage, swRegistration);
 }
 
 
